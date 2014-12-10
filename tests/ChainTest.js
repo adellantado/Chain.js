@@ -37,13 +37,31 @@ describe("Chain Suite", function() {
     it("test .execute", function(){
 
         this.testFunc = function() {}
-        chain.execute();
-
         spyOn(this, "testFunc").and.callThrough();
+
+        chain.execute();
 
         chain.resolve(this.testFunc);
 
         expect(this.testFunc).toHaveBeenCalled();
+
+    });
+
+    it("test .carry", function(){
+
+        var arg = true;
+
+        this.twoArgsFunc = function(arg1, arg2) {
+            expect(arg1).not.toBeUndefined();
+            expect(arg2).not.toBeUndefined();
+        }
+        spyOn(this, "twoArgsFunc").and.callThrough();
+
+        chain.carry(this.twoArgsFunc).execute(arg);
+
+        chain.resolve(arg);
+
+        expect(this.twoArgsFunc).toHaveBeenCalled();
 
     });
 

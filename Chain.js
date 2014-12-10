@@ -153,7 +153,7 @@ this.Chain = function(func) {
             var func;
             if (typeof data == 'function') {
                 func = data;
-                return func.call(args);
+                return func.apply(null, args);
             }
         }
 
