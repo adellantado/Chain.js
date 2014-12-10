@@ -144,6 +144,28 @@ this.Chain = function(func) {
 
     }
 
+    this.empty = function() {
+
+        var chain = new Chain();
+
+        var emptyFunction = function(data) {
+            return data;
+        }
+
+        var resChain = chain.filter(emptyFunction);
+
+        resolveFunc = function(data) {
+
+            chain.resolve(data);
+
+            return resChain;
+
+        }
+
+        return next = resChain;
+
+    }
+
     this.execute = function() {
 
         var args = arguments;

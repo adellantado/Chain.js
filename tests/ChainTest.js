@@ -50,7 +50,7 @@ describe("Chain Suite", function() {
     it("test .execute", function(){
 
         this.testFunc = function() {}
-        spyOn(this, "testFunc").and.callThrough();
+        spyOn(this, "testFunc");
 
         chain.execute();
 
@@ -68,7 +68,7 @@ describe("Chain Suite", function() {
             expect(arg1).not.toBeUndefined();
             expect(arg2).not.toBeUndefined();
         }
-        spyOn(this, "twoArgsFunc").and.callThrough();
+        spyOn(this, "twoArgsFunc");
 
         chain.carry(this.twoArgsFunc).execute(arg);
 
@@ -83,12 +83,12 @@ describe("Chain Suite", function() {
         this.functionInner = function(data) {
             return data+1;
         }
-        spyOn(this, "functionInner").and.callThrough();
+        spyOn(this, "functionInner");
 
         this.functionOuter = function(data) {
             expect(2).toEqual(data);
         }
-        spyOn(this, "functionOuter").and.callThrough();
+        spyOn(this, "functionOuter");
 
         chain.compose(this.functionOuter, this.functionInner);
 
@@ -113,6 +113,21 @@ describe("Chain Suite", function() {
         chain.resolve(arg1);
 
     });
+
+    it("test .empty", function(){
+
+        this.callFunc = function(data) {
+            expect(data).toBeTruthy();
+        }
+        spyOn(this, "callFunc");
+
+        chain.empty().map(this.callFunc);
+
+        chain.resolve(true);
+        chain.resolve(false);
+
+        expect(this.callFunc.calls.count()).toEqual(1);
+    })
 
 });
 
