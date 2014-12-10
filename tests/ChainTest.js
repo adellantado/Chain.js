@@ -11,6 +11,19 @@ describe("Chain Suite", function() {
         chain = new Chain();
     });
 
+
+
+    it("test .map", function() {
+
+        var _data = "some data";
+
+        chain.map(function(data) {
+            expect(_data).toBe(data);
+        });
+
+        chain.resolve(_data);
+    });
+
     it("test .then", function() {
 
         var _data = "some data";
@@ -62,6 +75,28 @@ describe("Chain Suite", function() {
         chain.resolve(arg);
 
         expect(this.twoArgsFunc).toHaveBeenCalled();
+
+    });
+
+    it("test .compose", function(){
+
+        this.functionInner = function(data) {
+            return data+1;
+        }
+        spyOn(this, "functionInner").and.callThrough();
+
+        this.functionOuter = function(data) {
+            expect(2).toEqual(data);
+        }
+        spyOn(this, "functionOuter").and.callThrough();
+
+        chain.compose(this.functionOuter, this.functionInner);
+
+        chain.resolve(1);
+
+        expect(this.functionInner).toHaveBeenCalled();
+        expect(this.functionOuter).toHaveBeenCalled();
+
 
     });
 
