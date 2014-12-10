@@ -24,11 +24,6 @@ describe("Chain Suite", function() {
 
     it("test .filter", function() {
 
-        var _less = 1;
-        var _more = 3;
-
-        var filtered = 2;
-
         chain.filter(function(data) {
             return data;
         }).then(function(data){
@@ -37,6 +32,19 @@ describe("Chain Suite", function() {
 
         chain.resolve(true);
         chain.resolve(false);
+    });
+
+    it("test .execute", function(){
+
+        this.testFunc = function() {}
+        chain.execute();
+
+        spyOn(this, "testFunc").and.callThrough();
+
+        chain.resolve(this.testFunc);
+
+        expect(this.testFunc).toHaveBeenCalled();
+
     });
 
 });
