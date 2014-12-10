@@ -165,14 +165,18 @@ this.Chain = function(func) {
     // Additional Functions
     this.compose2 = function(twoargs_func, arg2) {
 
-        resolveFunc = function(data) {
+        var chain = new Chain();
 
-            return new Chain()
-                .carry(twoargs_func)
-                .execute(arg2);
+        var resChain = chain.carry(twoargs_func).execute(arg2);
+
+        resolveFunc = function(data) {
+            chain.resolve(data);
+
+            return resChain;
+
         }
 
-        return next = new Chain();
+        return next = chain;
 
     }
 

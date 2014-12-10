@@ -100,6 +100,20 @@ describe("Chain Suite", function() {
 
     });
 
+    it("test .compose2", function(){
+
+        var arg1 = "arg1";
+        var arg2 = "arg2";
+
+        chain.compose2(function(a,b){
+            expect(a).toBe(arg1);
+            expect(b).toBe(arg2);
+        }, arg2);
+
+        chain.resolve(arg1);
+
+    });
+
 });
 
 
