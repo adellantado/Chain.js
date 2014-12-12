@@ -143,6 +143,30 @@ describe("Chain Suite", function() {
 
     });
 
+    describe("Error Handling Suite", function(){
+
+        it("throw error", function() {
+
+            var errorFunc = function() {
+                throw new Error("new error");
+            }
+
+            this.resolveFunc = function() {}
+            this.rejectFunc = function() {}
+
+            spyOn(this, 'resolveFunc');
+            spyOn(this, 'rejectFunc');
+
+            chain.map(errorFunc).then(this.resolveFunc, this.rejectFunc).catch(this.rejectFunc);
+            chain.resolve();
+
+            expect(this.resolveFunc).not.toHaveBeenCalled();
+            expect(this.rejectFunc.calls.count()).toEqual(2);
+
+        });
+
+    });
+
 });
 
 

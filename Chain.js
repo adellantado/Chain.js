@@ -19,21 +19,31 @@ this.Chain = function(func) {
 
     this.resolve = function(data) {
         var res;
-        if (resolveFunc) {
-            res = resolveFunc(data);
 
-            resolved = true;
+        try {
 
-            if (res instanceof Chain) {
-                res.setNext(next);
-                next = null;
+            if (resolveFunc) {
+                res = resolveFunc(data);
+
+                resolved = true;
+
+                if (res instanceof Chain) {
+                    res.setNext(next);
+                    next = null;
+                }
+
             }
+            if (next)
+                next.resolve(res);
 
+        } catch (e) {
+
+            if (next)
+                next.reject(res);
+
+        } finally {
+            return self;
         }
-        if (next)
-            next.resolve(res);
-
-        return self;
     }
 
     this.reject = function(data) {
