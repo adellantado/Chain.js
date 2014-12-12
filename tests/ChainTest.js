@@ -127,7 +127,21 @@ describe("Chain Suite", function() {
         chain.resolve(false);
 
         expect(this.callFunc.calls.count()).toEqual(1);
-    })
+    });
+
+    it("test .catch", function(){
+
+        var errorMessage = "error";
+
+        var rejectFunc = function(e) {
+            expect(e).toBe(errorMessage);
+        }
+
+        chain.catch(rejectFunc);
+
+        chain.reject(errorMessage);
+
+    });
 
 });
 
