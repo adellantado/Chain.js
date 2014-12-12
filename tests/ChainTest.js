@@ -157,7 +157,9 @@ describe("Chain Suite", function() {
             spyOn(this, 'resolveFunc');
             spyOn(this, 'rejectFunc');
 
-            chain.map(errorFunc).then(this.resolveFunc, this.rejectFunc).catch(this.rejectFunc);
+            chain.map(errorFunc)
+                .then(this.resolveFunc, this.rejectFunc)
+                .catch(this.rejectFunc);
             chain.resolve();
 
             expect(this.resolveFunc).not.toHaveBeenCalled();
