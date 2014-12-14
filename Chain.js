@@ -17,6 +17,10 @@ this.Chain = function(func) {
         return next = chain;
     }
 
+    this.getNext = function() {
+        return next;
+    }
+
     this.resolve = function(data) {
         var res;
 
